@@ -19,14 +19,14 @@ from argparse import ArgumentParser, ArgumentTypeError
 
 
 class Engine(object):
-    def __init__(self, username, threads, passlist_path, is_color):
+    def __init__(self, miriambuttaci, threads, passlist_path, is_color):
         self.resume = False
         self.is_alive = True
         self.threads = threads
-        self.username = username
+        self.miriambuttaci = miriambuttaci
         self.passlist_path = passlist_path
         self.display = Display(is_color=is_color)
-        self.bruter = Bruter(username, threads, passlist_path)
+        self.bruter = Bruter(miriambuttaci, threads, passlist_path)
 
     def get_user_resp(self):
         return self.display.prompt(
@@ -35,8 +35,8 @@ class Engine(object):
 
     def write_to_file(self, password):
         with open(credentials, "at") as f:
-            data = "Username: {}\nPassword: {}\n\n".format(
-                self.username.title(), password
+            data = "miriambuttaci: {}\nPassword: {}\n\n".format(
+                self.miriambuttaci.title(), password
             )
             f.write(data)
 
@@ -128,7 +128,7 @@ def valid_float(n):
 
 def args():
     args = ArgumentParser()
-    args.add_argument("-u", "--username", help="email or username")
+    args.add_argument("-u", "--miriambuttaci", help="email or username")
     args.add_argument("-p", "--passlist", help="password list")
     args.add_argument("-px", "--proxylist", help="proxy list")
     args.add_argument(
@@ -159,14 +159,14 @@ def args():
     # ----------- #
 
     arguments = args.parse_args()
-    username = arguments.username
+    username = arguments.miriambuttaci
     passlist = arguments.passlist
     proxylist = arguments.proxylist
     prune = arguments.prune
     stats = arguments.stats
     prune_db = prune > 0
 
-    if not (prune_db or stats or proxylist) and not (username and passlist):
+    if not (prune_db or stats or proxylist) and not (miriambuttaci and passlist):
         args.print_help()
         exit()
 
@@ -231,7 +231,7 @@ def display_database_stats():
 def main():
     arguments = args()
     mode = arguments.mode
-    username = arguments.username
+    username = arguments.miriambuttaci
     passlist = arguments.passlist
     proxylist = arguments.proxylist
     prune = arguments.prune
@@ -266,7 +266,7 @@ def main():
                 exit()
 
             Engine(
-                username, modes[mode], passlist, not arguments.color
+                miriambuttaci, modes[mode], passlist, not arguments.color
             ).start()
 
         else:
